@@ -1,0 +1,85 @@
+//Register Admin
+####
+POST http://localhost:2000/registeradmin
+Content-Type: application/json 
+//header : what is the content type
+
+{
+    "username": "wani",
+    "password": 5678,
+    "role": "admin"
+}
+
+
+//Login admin
+####
+POST http://localhost:2000/AdminLogin
+Content-Type: application/json
+
+{
+    "username": "syazwina",
+    "password": 123456
+}
+
+####
+
+POST http://localhost:2000/registerUser
+Content-Type: application/json 
+//header : what is the content type
+
+{
+    "username": "fifi",
+    "password": 334455,
+    "role": "user"
+}
+
+####
+
+POST http://localhost:2000/loginUser
+Content-Type: application/json
+
+{
+    "username": "farahh",
+    "password": 123
+}
+
+//Admin can register visitor
+####
+POST http://localhost:2000/registervisitor
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg4NDMzZWRkYWJjMGU2MDFmN2Q1ZGUiLCJ1c2VybmFtZSI6InN5YXp3aW5hIiwicGFzc3dvcmQiOjEyMzQ1Niwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAzNDMxNjQxLCJleHAiOjE3MDM0MzUyNDF9.BShO3jk1RimTkG6bIhpJOlppolL5KtDYl41mV9BatdU
+Content-Type: application/json
+
+{
+    "Name": "Syana",
+    "Phone_Number" : "01234567890",
+    "Address": "jalan permai",
+    "Floor_Wing": "23k",
+    "Whom_to_meet": "zana",
+    "Reason_to_meet": "party"
+}
+
+####
+
+GET http://localhost:2000/viewvisitor
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg4NGE5YWVkMDA4YjUwYWUwMjliYzIiLCJ1c2VybmFtZSI6InN5YXoiLCJwYXNzd29yZCI6MTIzNDU2LCJyb2xlIjoidXNlciIsImlhdCI6MTcwMzQzNjg4NiwiZXhwIjoxNzAzNDQwNDg2fQ.2O_cXTjRadFi43H0eLPdo1koMkF_6vRSGpdypTtftPc
+
+####
+GET http://localhost:2000/viewuser
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg4NDMzZWRkYWJjMGU2MDFmN2Q1ZGUiLCJ1c2VybmFtZSI6InN5YXp3aW5hIiwicGFzc3dvcmQiOjEyMzQ1Niwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAzNDMyNTI2LCJleHAiOjE3MDM0MzYxMjZ9.OmJKQB2UXr-4cu2rHw6Hm_DqWKl-aimRoxQ9GQtEr-U
+Content-Type: :application/json
+
+
+###
+
+POST http://localhost:2000/issuePass
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg4NGE5YWVkMDA4YjUwYWUwMjliYzIiLCJ1c2VybmFtZSI6InN5YXoiLCJwYXNzd29yZCI6MTIzNDU2LCJyb2xlIjoidXNlciIsImlhdCI6MTcwMzQzMjU2NCwiZXhwIjoxNzAzNDM2MTY0fQ.mkqQDF-0_0vRwXKmdt8976anNECzTorW5tjAgAbNxqI
+Content-Type: application/json
+
+{
+    "visitorName": "Syana",
+    "passType":  "VisitorPass"
+}
+
+###
+GET http://localhost:2000/retrievePass/Syana
+Content-Type: application/json
