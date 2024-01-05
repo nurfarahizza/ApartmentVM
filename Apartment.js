@@ -213,7 +213,7 @@
  * @swagger
  * /registerUser:
  *   post:
- *     summary: Register a new user
+ *     summary: Register a new user (Security access only)
  *     tags: [User]
  *     description: Register a new user with the specified username, password, and role (Security access).
  *     security:
