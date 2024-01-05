@@ -214,6 +214,7 @@
  * /registerUser:
  *   post:
  *     summary: Register a new user
+ *     tags: [User]
  *     description: Register a new user with the specified username, password, and role.
  *     security:
  *       - BearerAuth: []  # * Assumes bearer token authentication, modify based on your authentication method.
@@ -333,7 +334,7 @@
  * /registervisitor:
  *   post:
  *     summary: Register a new visitor (User access only)
- *     tags: [User]
+ *     tags: [Visitor]
  *     description: Register a new visitor with the provided details.
  *     security:
  *       - BearerAuth: []
@@ -403,7 +404,7 @@
  * /viewvisitor:
  *   get:
  *     summary: View visitor information (Admin & User access)
- *     tags: [Admin]
+ *     tags: [Visitor]
  *     description: Retrieve information about visitors. Requires authentication.
  *     security:
  *       - BearerAuth: []
@@ -511,7 +512,7 @@
  * /viewuser:
  *   get:
  *     summary: View user information (Admin access only)
- *     tags: [Admin]
+ *     tags: [User]
  *     description: Retrieve information about users. Requires authentication.
  *     security:
  *       - BearerAuth: []
@@ -554,7 +555,7 @@
  * /users:
  *   put:
  *     summary: Update Visitor information (User access only)
- *     tags: [User]
+ *     tags: [Visitor]
  *     description: Update details of a visitor. Requires authentication role.
  *     security:
  *       - BearerAuth: []
@@ -620,7 +621,7 @@
  * /deleteVisitor:
  *   delete:
  *     summary: Delete visitor data (User access only)
- *     tags: [User]
+ *     tags: [Visitor]
  *     description: Delete data of a visitor. Requires authentication and admin role.
  *     security:
  *       - BearerAuth: []
@@ -667,7 +668,7 @@
  * /issuePass:
  *   post:
  *     summary: Issue a visitor pass (User access only)
- *     tags: [User]
+ *     tags: [VisitorPass]
  *     description: Issue a pass to a visitor. Requires authentication.
  *     security:
  *       - BearerAuth: []
@@ -702,7 +703,7 @@
  * /retrievePass:
  *   post:
  *     summary: Retrieve visitor pass details (Visitor access)
- *     tags: [Visitor]
+ *     tags: [VisitorPass]
  *     description: Retrieve details of a visitor's pass by providing the visitor's name in the request body.
  *     requestBody:
  *       required: true
