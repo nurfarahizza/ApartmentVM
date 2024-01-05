@@ -114,11 +114,10 @@
  * @swagger
  * /registerUser:
  *   post:
- *     summary: Register a new user 
- *     tags: [User]
- *     description: Register a new user with the provided credentials.
+ *     summary: Register a new user
+ *     description: Register a new user with the specified username, password, and role.
  *     security:
- *       - BearerAuth: []
+ *       - BearerAuth: []  # * Assumes bearer token authentication, modify based on your authentication method.
  *     requestBody:
  *       description: User details for registration
  *       required: true
@@ -129,13 +128,13 @@
  *             properties:
  *               username:
  *                 type: string
- *                 description: The username of the user.
+ *                 description: The username of the new user.
  *               password:
  *                 type: string
- *                 description: The password of the user.
+ *                 description: The password of the new user.
  *               role:
  *                 type: string
- *                 description: The role of the user.
+ *                 description: The role of the new user.
  *             required:
  *               - username
  *               - password
@@ -143,8 +142,26 @@
  *     responses:
  *       200:
  *         description: User registered successfully.
+ *       403:
+ *         description: Forbidden - Insufficient privileges.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Forbidden: Insufficient privileges"  # * Example message for 403 response.
  *       500:
  *         description: Internal Server Error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Internal Server Error"  # * Example message for 500 response.
  */
 
 
