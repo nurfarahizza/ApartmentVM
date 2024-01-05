@@ -158,7 +158,7 @@ app.post('/AdminLogin', async (req, res) => {
  });
 
 //Register User
-  app.post('/registerUser', (req, res) => {
+  app.post('/registerUser',verifyToken, (req, res) => {
 
     if (req.user.role == 'user') {
       return res.status(403).send('Forbidden: Insufficient privileges');
@@ -204,7 +204,7 @@ app.post('/loginUser', async (req, res) => {
   });
 
 
-  //to register a visitor into mongodb only admin
+  //to register a visitor into mongodb only user
 app.post('/registervisitor', verifyToken, (req, res) => {
   if (req.user.role == 'admin') {
     return res.status(403).send('Forbidden: Insufficient privileges');
