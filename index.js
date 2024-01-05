@@ -159,6 +159,11 @@ app.post('/AdminLogin', async (req, res) => {
 
 //Register User
   app.post('/registerUser', (req, res) => {
+
+    if (req.user.role == 'user') {
+      return res.status(403).send('Forbidden: Insufficient privileges');
+    }
+
     let User = {
       username: req.body.username,
       password: req.body.password,
