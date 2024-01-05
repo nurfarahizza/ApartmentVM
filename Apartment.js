@@ -11,7 +11,7 @@
 
 //Swagger
 
-//To register admin
+//To register admin (public)
 /**
  * @swagger
  * /registeradmin:
@@ -47,7 +47,7 @@
  *         description: Internal Server Error.
  */
 
-//Login Admin
+//Login Admin (public)
 /**
  * @swagger
  * /AdminLogin:
@@ -108,8 +108,107 @@
  *                   example: "Internal Server Error"
  */
  
+//swagger to register security (admin only)
+/**
+ * @swagger
+ * /registersecurity:
+ *   post:
+ *     summary: Register a new security user (Admin access)
+ *     tags: [Security]
+ *     description: Register a new security user with admin privileges. Requires authentication and admin role.
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       description: Security user details for registration
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: The username of the security user.
+ *               password:
+ *                 type: string
+ *                 description: The password of the security user.
+ *               role:
+ *                 type: string
+ *                 description: The role of the security user (should be 'admin').
+ *     responses:
+ *       200:
+ *         description: Security user registered successfully.
+ *       403:
+ *         description: Forbidden - Insufficient privileges (requires admin role).
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Forbidden: Insufficient privileges"
+ *       500:
+ *         description: Internal Server Error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Internal Server Error"
+ */
 
-//register user
+//Swagger to login security
+/**
+ * @swagger
+ * /SecurityLogin:
+ *   post:
+ *     summary: Authenticate a security user
+ *     tags: [Security]
+ *     description: Authenticate a security user based on the provided username and password.
+ *     requestBody:
+ *       description: Security user login credentials
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: The username of the security user.
+ *               password:
+ *                 type: string
+ *                 description: The password of the security user.
+ *     responses:
+ *       200:
+ *         description: Login successful. Returns a token.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 Status:
+ *                   type: string
+ *                   description: Indicates the login status.
+ *                   example: "Login Successful!"
+ *                 token:
+ *                   type: string
+ *                   description: The authentication token.
+ *       403:
+ *         description: Invalid username or password.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: string
+ *               example: "Invalid username or password"
+ */
+
+
+
+//register user (security only)
 /**
  * @swagger
  * /registerUser:
@@ -165,7 +264,7 @@
  */
 
 
-//Swagger for login user
+//Swagger for login user (public)
 /**
  * @swagger
  * /loginUser:
@@ -228,7 +327,7 @@
 
 
 
-//swagger to register visitor
+//swagger to register visitor (user only)
 /**
  * @swagger
  * /registervisitor:
@@ -297,7 +396,7 @@
  */
            
 
-
+//view visitor (Security and user only)
 
  /** 
  * @swagger
@@ -353,8 +452,60 @@
  *             message: An error occurred while retrieving visitor information.
  */
 
-//Swagger for view all users (admin only)
 
+ //View all Security (admin only)
+/**
+ * @swagger
+ * /viewsecurity:
+ *   get:
+ *     summary: View security information (Admin access)
+ *     tags: [Security]
+ *     description: Retrieve information of all security users. Requires authentication and admin role.
+ *     security:
+ *       - BearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Security information retrieved successfully.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   username:
+ *                     type: string
+ *                     description: The username of the security user.
+ *                   password:
+ *                     type: string
+ *                     description: The password of the security user.
+ *                   role:
+ *                     type: string
+ *                     description: The role of the security user.
+ *       403:
+ *         description: Forbidden - Insufficient privileges (requires admin role).
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Forbidden: Insufficient privileges"
+ *       500:
+ *         description: Internal Server Error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An error occurred while retrieving Security information"
+ */
+
+
+//Swagger for view all users (admin and security only)
 /**
  * @swagger
  * /viewuser:
@@ -397,23 +548,16 @@
  *             message: An error occurred while retrieving user information.
  */
 
-//Swagger for Update visitor detail
+//Swagger for Update visitor detail (user only)
 /**
  * @swagger
- * /users/{id}:
+ * /users:
  *   put:
  *     summary: Update Visitor information (User access only)
  *     tags: [User]
- *     description: Update details of visitor. Requires authentication role.
+ *     description: Update details of a visitor. Requires authentication role.
  *     security:
  *       - BearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         description: The ID of the visitor to update.
- *         required: true
- *         schema:
- *            type: string
  *     requestBody:
  *       description: Updated Visitor details
  *       required: true
@@ -422,6 +566,9 @@
  *           schema:
  *             type: object
  *             properties:
+ *               id:
+ *                 type: string
+ *                 description: The ID of the visitor to update.
  *               Name:
  *                 type: string
  *                 description: The updated Name of the visitor.
@@ -465,22 +612,28 @@
  *                   example: "Internal Server Error"
  */
 
+
+
+//Swagger to delete visitor (User only)
 /**
  * @swagger
- * /DeleteVisitor/{id}:
+ * /deleteVisitor:
  *   delete:
  *     summary: Delete visitor data (User access only)
  *     tags: [User]
  *     description: Delete data of a visitor. Requires authentication and admin role.
  *     security:
  *       - BearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         description: The ID of the visitor data to delete.
- *         required: true
- *         schema:
- *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               id:
+ *                 type: string
+ *                 description: The ID of the visitor data to delete.
  *     responses:
  *       200:
  *         description: Visitor data deleted successfully.
@@ -507,7 +660,8 @@
  */
 
 
-//Swagger for issue pass
+
+//Swagger for issue pass (user only)
 /**
  * @swagger
  * /issuePass:
@@ -542,21 +696,24 @@
  *         description: Internal Server Error.
  */
 
-//swagger for visitor to retrieve pass
+//swagger for visitor to retrieve pass (public)
 /**
  * @swagger
- * /retrievePass/{visitorName}:
- *   get:
+ * /retrievePass:
+ *   post:
  *     summary: Retrieve visitor pass details (Visitor access)
  *     tags: [Visitor]
- *     description: Retrieve details of a visitor's pass by providing the visitor's name.
- *     parameters:
- *       - in: path
- *         name: visitorName
- *         description: The name of the visitor.
- *         required: true
- *         schema:
- *           type: string
+ *     description: Retrieve details of a visitor's pass by providing the visitor's name in the request body.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               visitorName:
+ *                 type: string
+ *                 description: The name of the visitor.
  *     responses:
  *       200:
  *         description: Visitor pass details retrieved successfully.

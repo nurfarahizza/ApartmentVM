@@ -17,8 +17,29 @@ POST http://localhost:2000/AdminLogin
 Content-Type: application/json
 
 {
-    "username": "syazwina",
-    "password": 123456
+    "username": "farah",
+    "password": "12345"
+}
+
+####
+POST http://localhost:2000/registersecurity
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTkyYTdlNmRkYWIzMzViMzMxYzQyMmEiLCJ1c2VybmFtZSI6ImZhcmFoIiwicGFzc3dvcmQiOiIxMjM0NTYiLCJyb2xlIjoidXNlciIsImlhdCI6MTcwNDQ4NTg2MSwiZXhwIjoxNzA0NDg5NDYxfQ.c9v2CDUw4aAfOj1j-xxuQUpX6WlVIAK2jOYO8Wlykzo
+Content-Type: application/json
+
+{
+    "username": "sara",
+    "password": "1234",
+    "role": "security"
+}
+
+####
+//Login Security
+POST http://localhost:2000/SecurityLogin
+Content-Type: application/json
+
+{
+    "username": "sara",
+    "password": "1234"
 }
 
 ####
@@ -39,14 +60,14 @@ POST http://localhost:2000/loginUser
 Content-Type: application/json
 
 {
-    "username": "farahh",
-    "password": 123
+    "username": "farah",
+    "password": "123456"
 }
 
 //Admin can register visitor
 ####
 POST http://localhost:2000/registervisitor
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg4NDMzZWRkYWJjMGU2MDFmN2Q1ZGUiLCJ1c2VybmFtZSI6InN5YXp3aW5hIiwicGFzc3dvcmQiOjEyMzQ1Niwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAzNDMxNjQxLCJleHAiOjE3MDM0MzUyNDF9.BShO3jk1RimTkG6bIhpJOlppolL5KtDYl41mV9BatdU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk4NjBkYTQwNzY4M2Q0YWZiYTg3MDQiLCJ1c2VybmFtZSI6InNhcmEiLCJwYXNzd29yZCI6IjEyMzQiLCJyb2xlIjoic2VjdXJpdHkiLCJpYXQiOjE3MDQ0ODUyODEsImV4cCI6MTcwNDQ4ODg4MX0.BLUgYHodQXPL1lptBYoSj1BP_GzCzj2AO93wgeta1q4
 Content-Type: application/json
 
 {
@@ -65,8 +86,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg4NGE5Y
 
 ####
 GET http://localhost:2000/viewuser
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTg4NDMzZWRkYWJjMGU2MDFmN2Q1ZGUiLCJ1c2VybmFtZSI6InN5YXp3aW5hIiwicGFzc3dvcmQiOjEyMzQ1Niwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzAzNDMyNTI2LCJleHAiOjE3MDM0MzYxMjZ9.OmJKQB2UXr-4cu2rHw6Hm_DqWKl-aimRoxQ9GQtEr-U
-Content-Type: :application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTkyYTdlNmRkYWIzMzViMzMxYzQyMmEiLCJ1c2VybmFtZSI6ImZhcmFoIiwicGFzc3dvcmQiOiIxMjM0NTYiLCJyb2xlIjoidXNlciIsImlhdCI6MTcwNDQ4NTI1NCwiZXhwIjoxNzA0NDg4ODU0fQ.Bwm5M0YRPX2mUbiPxTkXcavBupNBu7BquSNhnN8VA_o
 
 
 ###

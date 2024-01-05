@@ -51,6 +51,7 @@ const Visitorregistration = db.collection('Visitor');
 const adminuser = db.collection('Admin');
 const collectionuser = db.collection('User');
 const passesCollection = db.collection('Passes');
+const securitycollection = db.collection('Security');
 
 const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
@@ -121,7 +122,7 @@ function verifyToken(req, res, next) {
 
 module.exports = { generateToken, verifyToken };
 
-//post to register admin,
+//post to register admin (public)
 app.post('/registeradmin', (req, res) => {
   let Admin = {
     username: req.body.username,
@@ -142,7 +143,34 @@ app.post('/registeradmin', (req, res) => {
   res.send('Admin registered successfully!');
 });
 
-//Admin Login
+//register security (admin only)
+app.post('/registersecurity',verifyToken, (req, res) => {
+
+  if (req.user.role != 'admin') {
+    return res.status(403).send('Forbidden: Insufficient privileges');
+  }
+
+  let Security = {
+    username: req.body.username,
+    password: req.body.password,
+    role: req.body.role
+  }; 
+
+  securitycollection.insertOne(Security, (err, result) => {
+    if (err) {
+      console.error('Error inserting data:', err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+    console.log('Security registered:', result.insertedId);
+    res.send('Security registered successfully!');
+  })
+  console.log('Security registered');
+  res.send('Security registered successfully!');
+});
+
+
+//Admin Login (public)
 app.post('/AdminLogin', async (req, res) => {
     const { username, password } = req.body;
     const user = await adminuser.findOne({ username,password });
@@ -157,10 +185,25 @@ app.post('/AdminLogin', async (req, res) => {
     }
  });
 
-//Register User
+ //Security Logic (public)
+ app.post('/SecurityLogin', async (req, res) => {
+  const { username, password } = req.body;
+  const user = await securitycollection.findOne({ username,password });
+  if (user) 
+  {
+    let token = generateToken(user)
+    res.send({ Status: "Login Succesful!", token: token });
+  }
+  else
+  {
+    res.send("Invalid username or password")
+  }
+});
+
+//Register User (Security only)
   app.post('/registerUser',verifyToken, (req, res) => {
 
-    if (req.user.role == 'user') {
+    if (req.user.role != 'security') {
       return res.status(403).send('Forbidden: Insufficient privileges');
     }
 
@@ -185,7 +228,7 @@ app.post('/AdminLogin', async (req, res) => {
     });
 
 
-    //to login user..
+    //to login user (public)
 app.post('/loginUser', async (req, res) => {
     const { username, password } = req.body;
     
@@ -204,9 +247,9 @@ app.post('/loginUser', async (req, res) => {
   });
 
 
-  //to register a visitor into mongodb only user
+  //to register visitor (only user)
 app.post('/registervisitor', verifyToken, (req, res) => {
-  if (req.user.role == 'admin') {
+  if (req.user.role != 'user') {
     return res.status(403).send('Forbidden: Insufficient privileges');
   }
 
@@ -234,9 +277,14 @@ else {
     res.send('Visitor registered successfully!');
   }});
   
-//view all visitor
+
+//view all visitor (security and user only)
 app.get('/viewvisitor', verifyToken, (req, res) => 
   {
+    if (req.user.role == 'admin') {
+      return res.status(403).send('Forbidden: Insufficient privileges');
+    }
+
     Visitorregistration.find().toArray()
       .then(Visitor => {
         res.json(Visitor);
@@ -251,12 +299,14 @@ app.get('/viewvisitor', verifyToken, (req, res) =>
     console.log(`Example app listening on port ${port}`)
   })
 
-//view all user (admin only)
+
+//view all user (admin &security only)
 app.get('/viewuser', verifyToken, (req, res) => 
   {
     if (req.user.role == 'user') {
       return res.status(403).send('Forbidden: Insufficient privileges');
     }
+
     collectionuser.find().toArray()
       .then(User => {
         res.json(User);
@@ -267,9 +317,28 @@ app.get('/viewuser', verifyToken, (req, res) =>
       });
     });
 
+
+//view all security (admin only)
+app.get('/viewsecurity', verifyToken, (req, res) => 
+  {
+    if (req.user.role != 'admin') {
+      return res.status(403).send('Forbidden: Insufficient privileges');
+    }
+
+    securitycollection.find().toArray()
+      .then(Security => {
+        res.json(Security);
+      })
+      .catch(error => {
+        console.error('Error retrieving Security information:', error);
+        res.status(500).send('An error occurred while retrieving Security information');
+      });
+    });
+
+
 //Update visitor details (user only)
 app.put('/users/:id', verifyToken, (req, res) => {
-  if (req.user.role == 'admin') {
+  if (req.user.role != 'user') {
     return res.status(403).send('Forbidden: Insufficient privileges');
   }
 
@@ -285,7 +354,7 @@ app.put('/users/:id', verifyToken, (req, res) => {
 
 // Delete a visitor (User only)
 app.delete('/DeleteVisitor/:id', verifyToken, (req, res) => {
-  if (req.user.role == 'admin') {
+  if (req.user.role != 'user') {
     return res.status(403).send('Forbidden: Insufficient privileges');
   }
 
@@ -303,8 +372,13 @@ app.delete('/DeleteVisitor/:id', verifyToken, (req, res) => {
 });
 
 
-// User issues visitor pass
+// User issues visitor pass (user only)
 app.post('/issuePass', verifyToken, (req, res) => {
+
+  if (req.user.role != 'user') {
+    return res.status(403).send('Forbidden: Insufficient privileges');
+  }
+
   const { visitorName, passType } = req.body;
 
   Visitorregistration.findOne({ Name: visitorName })
@@ -320,7 +394,7 @@ app.post('/issuePass', verifyToken, (req, res) => {
     issueDate: new Date(),
   };
 
- // Save passDetails to the Passes collection
+ // Save passDetails to the Passes collection 
  passesCollection.insertOne(passDetails)
  .then(result => {
    console.log('Pass issued:', result.insertedId);
@@ -337,7 +411,7 @@ res.status(500).send('An error occurred while finding the visitor');
 });
 });
 
-// Visitor retrieves their pass
+// Visitor retrieves their pass (public/visitor)
 app.get('/retrievePass/:visitorName', (req, res) => {
   const visitorName = req.params.visitorName;
 
