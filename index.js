@@ -337,7 +337,7 @@ app.get('/viewsecurity', verifyToken, (req, res) =>
 
 
 //Update visitor details (user only)
-app.put('/users/:id', verifyToken, (req, res) => {
+app.put('/Update/:id', verifyToken, (req, res) => {
   if (req.user.role != 'user') {
     return res.status(403).send('Forbidden: Insufficient privileges');
   }

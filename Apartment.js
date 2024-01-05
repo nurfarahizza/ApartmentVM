@@ -35,7 +35,7 @@
  *                 description: The password of the admin.
  *               role:
  *                 type: string
- *                 description: The role of the admin.
+ *                 description: The role of the admin (should be 'admin').
  *             required:
  *               - username
  *               - password
@@ -52,7 +52,7 @@
  * @swagger
  * /AdminLogin:
  *   post:
- *     summary: Admin Login
+ *     summary: Login Admin
  *     tags: [Admin]
  *     description: Log in as an admin with the provided credentials.
  *     requestBody:
@@ -113,13 +113,13 @@
  * @swagger
  * /registersecurity:
  *   post:
- *     summary: Register a new security user (Admin access)
+ *     summary: Register a new security (Admin access)
  *     tags: [Security]
- *     description: Register a new security user with admin privileges. Requires authentication and admin role.
+ *     description: Register a new security with admin privileges. Requires authentication.
  *     security:
  *       - BearerAuth: []
  *     requestBody:
- *       description: Security user details for registration
+ *       description: Security details for registration
  *       required: true
  *       content:
  *         application/json:
@@ -128,13 +128,13 @@
  *             properties:
  *               username:
  *                 type: string
- *                 description: The username of the security user.
+ *                 description: The username of the security.
  *               password:
  *                 type: string
- *                 description: The password of the security user.
+ *                 description: The password of the security.
  *               role:
  *                 type: string
- *                 description: The role of the security user (should be 'admin').
+ *                 description: The role of the security (should be 'security').
  *     responses:
  *       200:
  *         description: Security user registered successfully.
@@ -165,11 +165,11 @@
  * @swagger
  * /SecurityLogin:
  *   post:
- *     summary: Authenticate a security user
+ *     summary: Authenticate a security
  *     tags: [Security]
- *     description: Authenticate a security user based on the provided username and password.
+ *     description: Authenticate a security based on the provided username and password.
  *     requestBody:
- *       description: Security user login credentials
+ *       description: Security login credentials
  *       required: true
  *       content:
  *         application/json:
@@ -178,10 +178,10 @@
  *             properties:
  *               username:
  *                 type: string
- *                 description: The username of the security user.
+ *                 description: The username of the security.
  *               password:
  *                 type: string
- *                 description: The password of the security user.
+ *                 description: The password of the security.
  *     responses:
  *       200:
  *         description: Login successful. Returns a token.
@@ -215,9 +215,9 @@
  *   post:
  *     summary: Register a new user
  *     tags: [User]
- *     description: Register a new user with the specified username, password, and role.
+ *     description: Register a new user with the specified username, password, and role (Security access).
  *     security:
- *       - BearerAuth: []  # * Assumes bearer token authentication, modify based on your authentication method.
+ *       - BearerAuth: []
  *     requestBody:
  *       description: User details for registration
  *       required: true
@@ -234,7 +234,7 @@
  *                 description: The password of the new user.
  *               role:
  *                 type: string
- *                 description: The role of the new user.
+ *                 description: The role of the new user (should be 'user').
  *             required:
  *               - username
  *               - password
@@ -251,7 +251,7 @@
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Forbidden: Insufficient privileges"  # * Example message for 403 response.
+ *                   example: "Forbidden: Insufficient privileges"  
  *       500:
  *         description: Internal Server Error.
  *         content:
@@ -261,7 +261,7 @@
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Internal Server Error"  # * Example message for 500 response.
+ *                   example: "Internal Server Error"  
  */
 
 
@@ -357,7 +357,7 @@
  *                 description: The address of the visitor.
  *               Floor_Wing:
  *                 type: string
- *                 description: The floor and wing details.
+ *                 description: The floor and wing details of the visitor.
  *               Whom_to_meet:
  *                 type: string
  *                 description: The person whom the visitor intends to meet.
@@ -403,7 +403,7 @@
  * @swagger
  * /viewvisitor:
  *   get:
- *     summary: View visitor information (Admin & User access)
+ *     summary: View visitor information (Security & User access)
  *     tags: [Visitor]
  *     description: Retrieve information about visitors. Requires authentication.
  *     security:
@@ -461,7 +461,7 @@
  *   get:
  *     summary: View security information (Admin access)
  *     tags: [Security]
- *     description: Retrieve information of all security users. Requires authentication and admin role.
+ *     description: Retrieve information of all security. Requires authentication and admin role.
  *     security:
  *       - BearerAuth: []
  *     responses:
@@ -511,7 +511,7 @@
  * @swagger
  * /viewuser:
  *   get:
- *     summary: View user information (Admin access only)
+ *     summary: View user information (Admin and Security access only)
  *     tags: [User]
  *     description: Retrieve information about users. Requires authentication.
  *     security:
@@ -536,7 +536,7 @@
  *                     type: string
  *                     description: The role of the user.
  *     403:
- *       description: Forbidden - Insufficient privileges (requires admin role).
+ *       description: Forbidden - Insufficient privileges (requires admin and security role).
  *       content:
  *         application/json:
  *           example:
@@ -552,7 +552,7 @@
 //Swagger for Update visitor detail (user only)
 /**
  * @swagger
- * /users:
+ * /Update:
  *   put:
  *     summary: Update Visitor information (User access only)
  *     tags: [Visitor]
@@ -592,7 +592,7 @@
  *       200:
  *         description: User updated successfully.
  *       403:
- *         description: Forbidden - Insufficient privileges (requires admin role).
+ *         description: Forbidden - Insufficient privileges (requires user role).
  *         content:
  *           application/json:
  *             schema:
@@ -622,7 +622,7 @@
  *   delete:
  *     summary: Delete visitor data (User access only)
  *     tags: [Visitor]
- *     description: Delete data of a visitor. Requires authentication and admin role.
+ *     description: Delete data of a visitor. Requires authentication and user role.
  *     security:
  *       - BearerAuth: []
  *     requestBody:
@@ -639,7 +639,7 @@
  *       200:
  *         description: Visitor data deleted successfully.
  *       403:
- *         description: Forbidden - Insufficient privileges (requires admin role).
+ *         description: Forbidden - Insufficient privileges (requires user role).
  *         content:
  *           application/json:
  *             schema:
@@ -690,7 +690,7 @@
  *       200:
  *         description: Visitor pass issued successfully.
  *       403:
- *         description: Forbidden - Insufficient privileges (requires admin role).
+ *         description: Forbidden - Insufficient privileges (requires user role).
  *       404:
  *         description: Visitor not found.
  *       500:
