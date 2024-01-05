@@ -117,6 +117,8 @@
  *     summary: Register a new user 
  *     tags: [User]
  *     description: Register a new user with the provided credentials.
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       description: User details for registration
  *       required: true
