@@ -707,21 +707,17 @@
 //swagger for visitor to retrieve pass (public)
 /**
  * @swagger
- * /retrievePass:
- *   post:
- *     summary: Retrieve visitor pass details (Visitor access)
- *     tags: [VisitorPass]
- *     description: Retrieve details of a visitor's pass by providing the visitor's name in the request body.
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               visitorName:
- *                 type: string
- *                 description: The name of the visitor.
+ * /retrievePass/{visitorName}:
+ *   get:
+ *     summary: Retrieve visitor pass details by visitor name
+ *     description: Retrieve visitor pass details with the provided visitor name.
+ *     parameters:
+ *       - in: path
+ *         name: visitorName
+ *         required: true
+ *         description: Name of the visitor to retrieve pass details.
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: Visitor pass details retrieved successfully.
@@ -730,21 +726,30 @@
  *             schema:
  *               type: object
  *               properties:
- *                 visitorId:
+ *                 passId:
  *                   type: string
- *                   description: The identifier of the visitor.
- *                 passType:
+ *                   description: The ID of the visitor pass.
+ *                 visitorName:
  *                   type: string
- *                   description: The type of pass issued.
- *                 issuedBy:
- *                   type: string
- *                   description: The username who issued the pass.
- *                 issueDate:
- *                   type: string
- *                   format: date-time
- *                   description: The date and time when the pass was issued.
+ *                   description: The name of the visitor.
  *       404:
  *         description: Visitor pass not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Visitor pass not found"  # * Example message for 404 response.
  *       500:
  *         description: Internal Server Error.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An error occurred while retrieving visitor pass"  # * Example message for 500 response.
  */
