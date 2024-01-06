@@ -628,28 +628,25 @@
 //Swagger to delete visitor (User only)
 /**
  * @swagger
- * /deleteVisitor:
+ * /DeleteVisitor/{id}:
  *   delete:
- *     summary: Delete visitor data (User access only)
- *     tags: [Visitor]
- *     description: Delete data of a visitor. Requires authentication and user role.
+ *     summary: Delete visitor data by ID (User access only)
+ *     tags: [User]
+ *     description: Delete visitor data with the provided ID.
  *     security:
- *       - BearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               id:
- *                 type: string
- *                 description: The ID of the visitor data to delete.
+ *       - BearerAuth: []  
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the visitor data to delete.
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
  *         description: Visitor data deleted successfully.
  *       403:
- *         description: Forbidden - Insufficient privileges (requires user role).
+ *         description: Forbidden - Insufficient privileges.
  *         content:
  *           application/json:
  *             schema:
@@ -657,7 +654,7 @@
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Forbidden: Insufficient privileges"
+ *                   example: "Forbidden: Insufficient privileges" 
  *       500:
  *         description: Internal Server Error.
  *         content:
@@ -667,7 +664,7 @@
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "An error occurred while deleting the visit detail"
+ *                   example: "Internal Server Error"  
  */
 
 
