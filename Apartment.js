@@ -710,6 +710,7 @@
  * /retrievePass/{visitorName}:
  *   get:
  *     summary: Retrieve visitor pass details by visitor name
+ *     tags: [VisitorPass]
  *     description: Retrieve visitor pass details with the provided visitor name.
  *     parameters:
  *       - in: path
