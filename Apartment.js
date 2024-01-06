@@ -558,7 +558,14 @@
  *     tags: [User]
  *     description: Update visitor details with the provided data.
  *     security:
- *       - BearerAuth: [] 
+ *       - BearerAuth: []  # * Assumes bearer token authentication, modify based on your authentication method.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the visitor to update.
+ *         schema:
+ *           type: string
  *     requestBody:
  *       description: Updated visitor details
  *       required: true
@@ -604,7 +611,7 @@
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Forbidden: Insufficient privileges"  
+ *                   example: "Forbidden: Insufficient privileges"  # * Example message for 403 response.
  *       500:
  *         description: Internal Server Error.
  *         content:
@@ -614,7 +621,7 @@
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Internal Server Error"  
+ *                   example: "Internal Server Error"  # * Example message for 500 response.
  */
 
 
