@@ -60,14 +60,29 @@ POST http://localhost:2000/loginUser
 Content-Type: application/json
 
 {
-    "username": "farah",
-    "password": "123456"
+    "username": "Syazwina",
+    "password": "22222"
 }
 
 //Admin can register visitor
 ####
 POST http://localhost:2000/registervisitor
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk4NjBkYTQwNzY4M2Q0YWZiYTg3MDQiLCJ1c2VybmFtZSI6InNhcmEiLCJwYXNzd29yZCI6IjEyMzQiLCJyb2xlIjoic2VjdXJpdHkiLCJpYXQiOjE3MDQ0ODUyODEsImV4cCI6MTcwNDQ4ODg4MX0.BLUgYHodQXPL1lptBYoSj1BP_GzCzj2AO93wgeta1q4
+Content-Type: application/json
+
+{
+    "Name": "Syana",
+    "Phone_Number" : "01234567890",
+    "Address": "jalan permai",
+    "Floor_Wing": "23k",
+    "Whom_to_meet": "zana",
+    "Reason_to_meet": "party"
+}
+
+####
+
+PUT http://localhost:2000/Update/659872805df9712ade8826f5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTk4NzIwYTVkZjk3MTJhZGU4ODI2ZjQiLCJ1c2VybmFtZSI6IlN5YXp3aW5hIiwicGFzc3dvcmQiOiIyMjIyMiIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzA0NTUxMDU4LCJleHAiOjE3MDQ1NTQ2NTh9.ZlGUAuS1-dJvVs7zYLFgjFPlBUao2P23JnMyxMafpYI
 Content-Type: application/json
 
 {

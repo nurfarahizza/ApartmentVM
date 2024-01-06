@@ -552,27 +552,24 @@
 //Swagger for Update visitor detail (user only)
 /**
  * @swagger
- * /Update:
+ * /Update/{id}:
  *   put:
- *     summary: Update Visitor information (User access only)
- *     tags: [Visitor]
- *     description: Update details of a visitor. Requires authentication role.
+ *     summary: Update visitor details by ID (User access only)
+ *     tags: [User]
+ *     description: Update visitor details with the provided data.
  *     security:
- *       - BearerAuth: []
+ *       - BearerAuth: [] 
  *     requestBody:
- *       description: Updated Visitor details
+ *       description: Updated visitor details
  *       required: true
  *       content:
  *         application/json:
  *           schema:
  *             type: object
  *             properties:
- *               id:
- *                 type: string
- *                 description: The ID of the visitor to update.
  *               Name:
  *                 type: string
- *                 description: The updated Name of the visitor.
+ *                 description: The updated name of the visitor.
  *               Phone_Number:
  *                 type: string
  *                 description: The updated phone number of the visitor.
@@ -581,18 +578,25 @@
  *                 description: The updated address of the visitor.
  *               Floor_Wing:
  *                 type: string
- *                 description: The updated floor wing.
+ *                 description: The updated floor and wing details.
  *               Whom_to_meet:
  *                 type: string
- *                 description: The updated whom to meet.
+ *                 description: The updated person whom the visitor intends to meet.
  *               Reason_to_meet:
  *                 type: string
- *                 description: The updated reason to meet.
+ *                 description: The updated reason for the visit.
+ *             required:
+ *               - Name
+ *               - Phone_Number
+ *               - Address
+ *               - Floor_Wing
+ *               - Whom_to_meet
+ *               - Reason_to_meet
  *     responses:
  *       200:
- *         description: User updated successfully.
+ *         description: Visitor updated successfully.
  *       403:
- *         description: Forbidden - Insufficient privileges (requires user role).
+ *         description: Forbidden - Insufficient privileges.
  *         content:
  *           application/json:
  *             schema:
@@ -600,7 +604,7 @@
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Forbidden: Insufficient privileges"
+ *                   example: "Forbidden: Insufficient privileges"  
  *       500:
  *         description: Internal Server Error.
  *         content:
@@ -610,9 +614,8 @@
  *               properties:
  *                 message:
  *                   type: string
- *                   example: "Internal Server Error"
+ *                   example: "Internal Server Error"  
  */
-
 
 
 //Swagger to delete visitor (User only)
